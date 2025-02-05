@@ -1,0 +1,5 @@
+#!/bin/env python3
+import coin
+
+if __name__ == "__main__":
+    coin.execute()
