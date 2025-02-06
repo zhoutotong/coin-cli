@@ -1,5 +1,5 @@
 #!/bin/env python3
-import coin
+import coincli
 
 if __name__ == "__main__":
-    coin.execute()
+    coincli.execute()

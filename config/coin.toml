@@ -1,0 +1,8 @@
+[packages.'Ubuntu22.04_x86_64']
+    [packages.'Ubuntu22.04_x86_64'.numpy]
+        type = "py"
+
+    [packages.'Ubuntu22.04_x86_64'.pip]
+        version = "21.2.4"
+        type = "apt"
+        cmd = 'sudo apt-get install python3-pip'
