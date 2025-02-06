@@ -1,8 +1,48 @@
-[packages.'Ubuntu22.04_x86_64']
-    [packages.'Ubuntu22.04_x86_64'.numpy]
+[packages.default]
+    [packages.default.numpy.install]
         type = "py"
+    [packages.default.onnx.install]
+        type = 'py'
 
-    [packages.'Ubuntu22.04_x86_64'.pip]
+    [packages.default.pip.install]
         version = "21.2.4"
         type = "apt"
         cmd = 'sudo apt-get install python3-pip'
+
+    [packages.default.ollama.install]
+        type = 'url'
+        cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
+
+    [packages.default.deepseek-r1]
+        dep = ['ollama']
+        desc = 'DeepSeek R1 is a deep learning model. It is a 7b version of the model.'
+    [packages.default.deepseek-r1.install]
+        type = 'cmd'
+        cmd = 'ollama run deepseek-r1'
+    [packages.default.deepseek-r1.run]
+        cmd = 'ollama run deepseek-r1:7b'
+
+
+[packages.'Ubuntu22.04_x86_64']
+    [packages.'Ubuntu22.04_x86_64'.numpy.install]
+        type = "py"
+    [packages.'Ubuntu22.04_x86_64'.onnx.install]
+        type = 'py'
+
+    [packages.'Ubuntu22.04_x86_64'.pip.install]
+        version = "21.2.4"
+        type = "apt"
+        cmd = 'sudo apt-get install python3-pip'
+
+    [packages.'Ubuntu22.04_x86_64'.ollama.install]
+        type = 'url'
+        cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
+
+    [packages.'Ubuntu22.04_x86_64'.deepseek-r1]
+        dep = ['ollama']
+        desc = 'DeepSeek R1 is a deep learning model. It is a 7b version of the model.'
+    [packages.'Ubuntu22.04_x86_64'.deepseek-r1.install]
+        type = 'cmd'
+        cmd = 'ollama run deepseek-r1'
+    [packages.'Ubuntu22.04_x86_64'.deepseek-r1.run]
+        cmd = 'ollama run deepseek-r1:7b'
