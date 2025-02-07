@@ -75,4 +75,5 @@
         type = "apt"
         cmd = '@sudo apt-get install -y pciutils'
         need_root = true
+        is_exist = "command -v lspci"
 
