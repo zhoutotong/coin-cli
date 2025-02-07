@@ -1,3 +1,10 @@
+[system.code_server]
+    url = ''
+    authorize = ''
+
+[solution.detection]
+
+
 [packages.default]
     [packages.default.numpy.install]
         type = "py"
@@ -6,6 +13,16 @@
         type = 'py'
         is_exist = "python3 -c \"import onnx\""
 
+    [packages.default.distro.install]
+        type = 'py'
+        is_exist = "python3 -c \"import distro\""
+
+    [packages.default.ultralytics.install]
+        type = 'py'
+        is_exist = "python3 -c \"import ultralytics\""
+
+    [packages.default.ollama]
+        dep = ['pciutils', 'curl']
     [packages.default.ollama.install]
         type = 'url'
         cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
@@ -17,7 +34,7 @@
     [packages.default.deepseek-r1.install]
         type = 'cmd'
         cmd = 'ollama pull deepseek-r1'
-        is_exist = "ollama show deepseek-rq"
+        is_exist = "ollama show deepseek-r1"
 
     [packages.default.deepseek-r1.run]
         cmd = 'ollama run deepseek-r1:7b'
@@ -26,7 +43,7 @@
         desc = 'curl is a command-line tool for transferring data with URL syntax.'
     [packages.default.curl.install]
         type = 'apt'
-        cmd = '@sudo apt-get install curl'
+        cmd = '@sudo apt-get install -y curl'
         need_root = true
         is_exist = "command -v curl"
 
@@ -52,35 +69,10 @@
         need_root = true
         is_exist = "command -v docker"
 
-[packages.'Ubuntu22.04_x86_64']
-    [packages.'Ubuntu22.04_x86_64'.numpy.install]
-        is_exist = "python3 -c \"import numpy\""
-        type = "py"
-    [packages.'Ubuntu22.04_x86_64'.onnx.install]
-        type = 'py'
-        is_exist = "python3 -c \"import onnx\""
-
-    [packages.'Ubuntu22.04_x86_64'.pciutils]
+    [packages.default.pciutils]
         desc = 'pciutils is a set of utilities for displaying information about PCI buses in the system and devices connected to them.'
-    [packages.'Ubuntu22.04_x86_64'.pciutils.install]
-        version = "21.2.4"
+    [packages.default.pciutils.install]
         type = "apt"
-        cmd = '@sudo apt-get install pciutils'
+        cmd = '@sudo apt-get install -y pciutils'
         need_root = true
 
-    [packages.'Ubuntu22.04_x86_64'.ollama]
-        dep = ['pciutils', 'curl']
-    [packages.'Ubuntu22.04_x86_64'.ollama.install]
-        type = 'url'
-        cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
-        is_exist = "ollama --version"
-
-    [packages.'Ubuntu22.04_x86_64'.deepseek-r1]
-        dep = ['ollama']
-        desc = 'DeepSeek R1 is a deep learning model. It is a 7b version of the model.'
-    [packages.'Ubuntu22.04_x86_64'.deepseek-r1.install]
-        type = 'cmd'
-        cmd = 'ollama pull deepseek-r1'
-        is_exist = "ollama show deepseek-r1"
-    [packages.'Ubuntu22.04_x86_64'.deepseek-r1.run]
-        cmd = 'ollama run deepseek-r1:7b'

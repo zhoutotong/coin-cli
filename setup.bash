@@ -64,5 +64,12 @@ then
     pip3 install toml
 fi
 
+# check is distro for python installed, if not, install it
+if ! python3 -c "import distro" &> /dev/null
+then
+    echo "distro for python not found, installing distro..."
+    pip3 install distro
+fi
+
 unset _COIN_SETUP_DIR
 unset SUDO
