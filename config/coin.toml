@@ -1,48 +1,86 @@
 [packages.default]
     [packages.default.numpy.install]
         type = "py"
+        is_exist = "python3 -c \"import numpy\""
     [packages.default.onnx.install]
         type = 'py'
-
-    [packages.default.pip.install]
-        version = "21.2.4"
-        type = "apt"
-        cmd = 'sudo apt-get install python3-pip'
+        is_exist = "python3 -c \"import onnx\""
 
     [packages.default.ollama.install]
         type = 'url'
         cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
+        is_exist = "ollama --version"
 
     [packages.default.deepseek-r1]
         dep = ['ollama']
         desc = 'DeepSeek R1 is a deep learning model. It is a 7b version of the model.'
     [packages.default.deepseek-r1.install]
         type = 'cmd'
-        cmd = 'ollama run deepseek-r1'
+        cmd = 'ollama pull deepseek-r1'
+        is_exist = "ollama show deepseek-rq"
+
     [packages.default.deepseek-r1.run]
         cmd = 'ollama run deepseek-r1:7b'
 
+    [packages.default.curl]
+        desc = 'curl is a command-line tool for transferring data with URL syntax.'
+    [packages.default.curl.install]
+        type = 'apt'
+        cmd = '@sudo apt-get install curl'
+        need_root = true
+        is_exist = "command -v curl"
+
+    [packages.default.ca-certificates]
+        desc = 'ca-certificates is a package that contains the set of CA certificates chosen by the Mozilla Foundation for use with the Internet PKI.'
+    [packages.default.ca-certificates.install]
+        type = 'apt'
+        cmd = '@sudo apt-get install ca-certificates'
+        need_root = true
+        is_exist = "command -v update-ca-certificates"
+
+    [packages.default.docker]
+        dep = ['curl', 'ca-certificates']
+        desc = 'Docker is a set of platform as a service products that use OS-level virtualization to deliver software in packages called containers.'
+    [packages.default.docker.install]
+        type = 'cmd'
+        cmd = ['@sudo install -m 0755 -d /etc/apt/keyrings',
+                '@sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc',
+                '@sudo chmod a+r /etc/apt/keyrings/docker.asc',
+                """echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | @sudo tee /etc/apt/sources.list.d/docker.list > /dev/null""",
+                '@sudo apt-get update',
+                '@sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin']
+        need_root = true
+        is_exist = "command -v docker"
 
 [packages.'Ubuntu22.04_x86_64']
     [packages.'Ubuntu22.04_x86_64'.numpy.install]
+        is_exist = "python3 -c \"import numpy\""
         type = "py"
     [packages.'Ubuntu22.04_x86_64'.onnx.install]
         type = 'py'
+        is_exist = "python3 -c \"import onnx\""
 
-    [packages.'Ubuntu22.04_x86_64'.pip.install]
+    [packages.'Ubuntu22.04_x86_64'.pciutils]
+        desc = 'pciutils is a set of utilities for displaying information about PCI buses in the system and devices connected to them.'
+    [packages.'Ubuntu22.04_x86_64'.pciutils.install]
         version = "21.2.4"
         type = "apt"
-        cmd = 'sudo apt-get install python3-pip'
+        cmd = '@sudo apt-get install pciutils'
+        need_root = true
 
+    [packages.'Ubuntu22.04_x86_64'.ollama]
+        dep = ['pciutils', 'curl']
     [packages.'Ubuntu22.04_x86_64'.ollama.install]
         type = 'url'
         cmd = 'curl -fsSL https://ollama.com/install.sh | sh'
+        is_exist = "ollama --version"
 
     [packages.'Ubuntu22.04_x86_64'.deepseek-r1]
         dep = ['ollama']
         desc = 'DeepSeek R1 is a deep learning model. It is a 7b version of the model.'
     [packages.'Ubuntu22.04_x86_64'.deepseek-r1.install]
         type = 'cmd'
-        cmd = 'ollama run deepseek-r1'
+        cmd = 'ollama pull deepseek-r1'
+        is_exist = "ollama show deepseek-r1"
     [packages.'Ubuntu22.04_x86_64'.deepseek-r1.run]
         cmd = 'ollama run deepseek-r1:7b'
